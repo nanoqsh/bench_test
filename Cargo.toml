@@ -1,0 +1,10 @@
+[package]
+name = "bench"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rs = { path = "rs" }
+
+[build-dependencies]
+cc = "1.0"
