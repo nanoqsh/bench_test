@@ -12,6 +12,8 @@ fn main() {
 
     println!("{iters} iterations set..");
 
+    let expected = DATA.map(|v| v.map(|x| x.wrapping_mul(iters)));
+
     // C test
     {
         use c::*;
@@ -19,10 +21,10 @@ fn main() {
         let a = Mat { data: DATA };
         let b = Mat { data: ONES };
         let mut c = Mat { data: ZERO };
-        let secs = bench(iters, || /* unsafe lol xD */ unsafe {
+        let secs = bench(iters, || unsafe /* unsafe lol xD */ {
             mult(&a, &b, &mut c);
         });
-        assert_eq!(c.data, DATA.map(|v| v.map(|x| x * iters)));
+        assert_eq!(c.data, expected);
         println!("  c: {secs:.4}");
     }
 
@@ -36,7 +38,7 @@ fn main() {
         let secs = bench(iters, || {
             mult(&a, &b, &mut c);
         });
-        assert_eq!(c.data, DATA.map(|v| v.map(|x| x * iters)));
+        assert_eq!(c.data, expected);
         println!(" rs: {secs:.4}");
     }
 }
@@ -51,8 +53,7 @@ where
     for _ in 0..iters {
         f();
     }
-    let end = Instant::now();
-    end.duration_since(start).as_secs_f64()
+    start.elapsed().as_secs_f64()
 }
 
 mod c {
