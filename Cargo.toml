@@ -8,3 +8,6 @@ rs = { path = "rs" }
 
 [build-dependencies]
 cc = "1.0"
+
+[profile.release]
+opt-level = 3

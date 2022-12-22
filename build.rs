@@ -4,6 +4,6 @@ fn main() {
     cc::Build::new()
         .compiler("clang")
         .file("clib.c")
-        .flag("-O2")
+        .flag("-O3")
         .compile("clib");
 }
