@@ -7,5 +7,5 @@ $ cargo r -r
 
 Optionally you can specify a number of iterations:
 ```bash
-$ cargo r -r 300
+$ cargo r -r 300000
 ```
